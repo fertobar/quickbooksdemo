@@ -1,0 +1,2 @@
+module QuickbooksHelper
+end
