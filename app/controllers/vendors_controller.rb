@@ -1,12 +1,14 @@
 class VendorsController < ApplicationController
   before_action :set_vendor, only: [:show, :edit, :update, :destroy]
 
-  before_action :set_qb_service, only: [:create, :edit, :update, :destroy]
+  before_action :set_qb_service, only: [:index, :create, :edit, :update, :destroy]
 
   # GET /vendors
   # GET /vendors.json
   def index
     @vendors = Vendor.all
+    url = @service.url_for_resource(Quickeebooks::Online::Model::Vendor.resource_for_collection)
+    @accounts = @service.list
   end
 
   # GET /vendors/1

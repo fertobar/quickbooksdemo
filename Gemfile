@@ -47,3 +47,5 @@ end
 #Collectionly.com
 gem 'quickeebooks'
 gem 'oauth-plugin'
+gem 'devise'
+gem 'omniauth-openid'

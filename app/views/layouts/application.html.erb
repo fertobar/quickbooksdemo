@@ -8,12 +8,24 @@
 </head>
 <body>
 
+<section id="sign-in">
+  <% if user_signed_in? %>
+      Signed in as <strong><%= current_user.email %></strong>.
+      <%= link_to 'Edit profile', edit_user_registration_path %> |
+      <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+  <% else %>
+      <%= link_to "Sign up", new_user_registration_path %> |
+      <%= link_to "Sign in", new_user_session_path %>
+      <ipp:login href="<%= user_omniauth_authorize_path(:intuit) %>"></ipp:login>
+  <% end %>
+</section>
+
 <% unless session[:token] %>
     <ipp:connectToIntuit></ipp:connectToIntuit>
 <% else %>
     <div>
       <%= link_to 'Disconnect from QuickBooks', disconnect_quickbooks_path , data: { confirm: 'Are you sure you want to disconnect?'}  %>
-      </div>
+    </div>
 <% end %>
 
 <% if notice %>
@@ -26,7 +38,13 @@
 
 <script>
     intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '<%= authenticate_quickbooks_url %>'});
+
+    <% if user_signed_in? && !session[:token] %>
+    intuit.ipp.anywhere.directConnectToIntuit();
+    <% end %>
+
 </script>
+
 
 </body>
 </html>

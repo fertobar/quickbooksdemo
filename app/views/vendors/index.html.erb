@@ -1,4 +1,27 @@
-<h1>Listing vendors</h1>
+<h1>Remote Vendors</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Remote id</th>
+    <th>Name</th>
+    <th>Email address</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @accounts.entries.each do |vendor| %>
+      <tr>
+        <td><%= vendor.id %></td>
+        <td><%= vendor.name %></td>
+        <td><%= vendor.email && vendor.email.address %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+
+<h1>Locals vendors</h1>
 
 <table>
   <thead>
