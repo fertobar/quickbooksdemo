@@ -7,8 +7,12 @@ class VendorsController < ApplicationController
   # GET /vendors.json
   def index
     @vendors = Vendor.all
-    url = @service.url_for_resource(Quickeebooks::Online::Model::Vendor.resource_for_collection)
-    @accounts = @service.list
+    if user_signed_in? && session[:token]
+      url = @service.url_for_resource(Quickeebooks::Online::Model::Vendor.resource_for_collection)
+      @accounts = @service.list
+    else
+      @accounts = []
+    end
   end
 
   # GET /vendors/1
@@ -92,15 +96,15 @@ class VendorsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_vendor
-      @vendor = Vendor.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_vendor
+    @vendor = Vendor.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def vendor_params
-      params.require(:vendor).permit(:name, :email_address)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def vendor_params
+    params.require(:vendor).permit(:name, :email_address)
+  end
 
   #def set_qb_service
   #  oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
